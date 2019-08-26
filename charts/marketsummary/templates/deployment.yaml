@@ -16,22 +16,10 @@ spec:
       containers:
       - name: marketsummary
         image: {{ .Values.image }}
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 5
-        readinessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 5
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "128m"
+            memory: "256Mi"
+            cpu: "64m"
           limits:
-            memory: "768Mi"
-            cpu: "1"
+            memory: "450Mi"
+            cpu: "512m"
