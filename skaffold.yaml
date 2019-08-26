@@ -1,0 +1,11 @@
+apiVersion: skaffold/v1beta11
+kind: Config
+deploy:
+  helm:
+    releases:
+      - name: nginx
+        chartPath: ./charts/marketsummary
+        values:
+          image: nginx
+        setValueTemplates:
+          istioDomain: "{{.ISTIO_DOMAIN}}"
