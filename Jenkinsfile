@@ -2,29 +2,6 @@ library 'LEAD'
 pipeline {
   agent none
   stages {
-    stage('Build') {
-      agent {
-        label "lead-toolchain-skaffold"
-      }
-      steps {
-        notifyPipelineStart()
-        notifyStageStart()
-        container('skaffold') {
-          sh "skaffold build --file-output=image.json"
-          stash includes: 'image.json', name: 'build'
-          sh "rm image.json"
-        }
-      }
-      post {
-        success {
-          notifyStageEnd()
-        }
-        failure {
-          notifyStageEnd([result: "fail"])
-        }
-      }
-    }
-
     stage("Deploy to Staging") {
       agent {
         label "lead-toolchain-skaffold"
@@ -39,8 +16,7 @@ pipeline {
       steps {
         notifyStageStart()
         container('skaffold') {
-          unstash 'build'
-          sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
+          sh "skaffold deploy -n ${TILLER_NAMESPACE}"
         }
       }
       post {
@@ -83,8 +59,7 @@ pipeline {
       steps {
         notifyStageStart()
         container('skaffold') {
-          unstash 'build'
-          sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
+          sh "skaffold deploy -n ${TILLER_NAMESPACE}"
         }
       }
       post {

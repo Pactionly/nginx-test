@@ -4,8 +4,8 @@
 
 replicaCount: 1
 
-image: nginx:latest
-version: "0.0.1-SNAPSHOT" 
+image: nginxdemos/hello:latest
+version: "0.0.1-SNAPSHOT"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
